@@ -2,7 +2,7 @@
 
 import requests, json, logging
 
-logging.basicConfig(filename='error-log.txt', level=logging.DEBUG, 
+logging.basicConfig(filename='error-log.txt', level=logging.DEBUG,
 format='%(asctime)s - %(levelname)s - %(message)s')
 
 class reddituser(object):
@@ -13,7 +13,8 @@ class reddituser(object):
 
     def importer(self):
         '''imports the profile .json data from the Reddit username input.
-           accounts for HTTP errors 404 and 429. Any other HTTP error is saved to log.txt.
+           accounts for HTTP errors 404 and 429.
+           Any other HTTP error is saved to log.txt.
         '''
         try:
             with requests.get("http://api.reddit.com/user/{}?limit=100".format(self.username),
@@ -36,7 +37,7 @@ class reddituser(object):
         # with open('{}.json'.format(self.username)) as json_data:
         #     d = json.load(json_data)
         #     return(d)
-        
+
     def karma(self, submission_type):
         '''returns the karma for the most recent link posted'''
         if submission_type.lower() in {"comment", "comments"}:
@@ -53,8 +54,3 @@ class reddituser(object):
                 logging.debug('Parsing error: No {} found in recent profile history.'.format(submission_type))
             continue
         return self['data']['children'][i]['data']['score']
-
-
-
-        
-
